@@ -16,23 +16,11 @@ Page({
 
   useTemplate() {
     const tpl = this.data.template;
-    const project = wx.getStorageSync('last_project');
-    if (!project || !project.image) {
-      wx.showToast({ title: '请先选择照片', icon: 'none' });
-      return;
-    }
-    wx.setStorageSync('last_project', {
-      ...project,
-      adjustments: tpl.adjustments,
-      borderStyle: tpl.borderStyle,
-      wmPos: tpl.watermarkPosition,
-      elements: project.elements || [],
-    });
-    wx.showToast({ title: '已套用模板', icon: 'success' });
+    // 暂存模板，回图库选图后自动套用
+    wx.setStorageSync('pending_template', tpl);
+    wx.showToast({ title: '已选择模板，请选照片', icon: 'none' });
     setTimeout(() => {
-      wx.redirectTo({
-        url: `/pages/editor/editor?image=${encodeURIComponent(project.image)}`,
-      });
+      wx.reLaunch({ url: '/pages/home/home' });
     }, 600);
   },
 

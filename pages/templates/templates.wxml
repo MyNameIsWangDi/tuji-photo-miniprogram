@@ -46,4 +46,12 @@
       </view>
     </scroll-view>
   </view>
+
+  <!-- 底部 pill 标签栏 -->
+  <view class="tabbar">
+    <view class="tab" bindtap="goHome"><text class="tab-text">图库</text></view>
+    <view class="tab" bindtap="goHome"><text class="tab-text">编辑</text></view>
+    <view class="tab tab-on"><text class="tab-text tab-text-on">模板</text></view>
+    <view class="tab" bindtap="goMine"><text class="tab-text">我的</text></view>
+  </view>
 </view>

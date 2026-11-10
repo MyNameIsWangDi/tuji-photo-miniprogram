@@ -1,0 +1,123 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx 8rpx;
+}
+
+.back {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0.8;
+}
+
+.top-title {
+  flex: 1;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.sec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0 20rpx;
+}
+
+.sec-label { font-size: 26rpx; color: var(--text-2); }
+
+.sec-hint { font-size: 22rpx; color: var(--text-3); }
+
+.theme-card {
+  display: flex;
+  align-items: center;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  border-radius: 28rpx;
+  background: var(--surface);
+  border: 1rpx solid var(--hairline);
+}
+
+.swatch {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 24rpx;
+  border: 1rpx solid var(--hairline);
+}
+
+.theme-text {
+  flex: 1;
+  margin-left: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.theme-name { font-size: 30rpx; font-weight: 500; color: var(--text); }
+
+.theme-desc { font-size: 24rpx; color: var(--text-2); }
+
+.radio {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid var(--text-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-on { border-color: var(--accent); }
+
+.radio-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  border-radius: 28rpx;
+  background: var(--surface);
+  border: 1rpx solid var(--hairline);
+}
+
+.row-label { font-size: 28rpx; color: var(--text); }
+
+.switch {
+  width: 88rpx;
+  height: 52rpx;
+  border-radius: 26rpx;
+  background: var(--hairline);
+  padding: 6rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.switch-on { background: var(--accent); justify-content: flex-end; }
+
+.knob {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: var(--text-2);
+}
+
+.knob-on { background: var(--on-accent); }
+
+.note {
+  display: block;
+  text-align: center;
+  margin-top: 24rpx;
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.tap { opacity: 0.85; }

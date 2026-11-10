@@ -106,3 +106,34 @@
 }
 
 .tap { opacity: 0.85; }
+
+/* 底部 pill 标签栏 */
+.tabbar {
+  position: fixed;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 24rpx;
+  height: 104rpx;
+  border-radius: 52rpx;
+  background: var(--hairline);
+  opacity: 0.92;
+  display: flex;
+  align-items: center;
+  padding: 12rpx;
+  box-sizing: border-box;
+}
+
+.tab {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-on { background: var(--accent); }
+
+.tab-text { font-size: 26rpx; color: var(--text-2); }
+
+.tab-text-on { color: var(--on-accent); font-weight: 500; }

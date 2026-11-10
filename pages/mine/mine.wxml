@@ -1,0 +1,38 @@
+<view class="root {{'t-' + theme}}">
+  <view class="page-pad">
+    <text class="h1">我的</text>
+
+    <!-- 外观入口 -->
+    <view class="card appearance" hover-class="tap" bindtap="goSettings">
+      <view class="swatch" style="background:{{themes[current].swatch}}"></view>
+      <view class="card-text">
+        <text class="card-title">外观</text>
+        <text class="card-sub">当前主题 · {{themes[current].label}}</text>
+      </view>
+      <view class="ic-chevron chevron"></view>
+    </view>
+
+    <!-- 统计 -->
+    <view class="card stats">
+      <view class="stat"><text class="stat-value">{{projectCount || 0}}</text><text class="stat-label">本地项目</text></view>
+      <view class="stat"><text class="stat-value">6</text><text class="stat-label">模板</text></view>
+      <view class="stat"><text class="stat-value">{{themes.length}}</text><text class="stat-label">主题</text></view>
+    </view>
+
+    <!-- 模板中心 -->
+    <view class="card row" hover-class="tap" bindtap="goTemplates">
+      <text class="card-title">模板中心</text>
+      <view class="ic-chevron chevron"></view>
+    </view>
+
+    <text class="version">途记 · v1.0.0</text>
+  </view>
+
+  <!-- 底部 pill 标签栏 -->
+  <view class="tabbar">
+    <view class="tab" bindtap="goHome"><text class="tab-text">图库</text></view>
+    <view class="tab" bindtap="goHome"><text class="tab-text">编辑</text></view>
+    <view class="tab" bindtap="goTemplates"><text class="tab-text">模板</text></view>
+    <view class="tab tab-on"><text class="tab-text tab-text-on">我的</text></view>
+  </view>
+</view>

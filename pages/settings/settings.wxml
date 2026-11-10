@@ -1,0 +1,37 @@
+<view class="root {{'t-' + theme}}">
+  <view class="topbar">
+    <view class="ic-back back" bindtap="back"></view>
+    <text class="top-title">外观</text>
+    <view class="back"></view>
+  </view>
+
+  <view class="page-pad">
+    <view class="sec-row">
+      <text class="sec-label">界面主题</text>
+      <text class="sec-hint">跟随系统</text>
+    </view>
+
+    <view wx:for="{{themes}}" wx:key="key" class="theme-card" hover-class="tap" data-key="{{item.key}}" bindtap="pickTheme">
+      <view class="swatch" style="background:{{item.swatch}}"></view>
+      <view class="theme-text">
+        <text class="theme-name">{{item.label}}</text>
+        <text class="theme-desc">{{current === item.key ? '当前主题 · ' + item.desc : item.desc}}</text>
+      </view>
+      <view class="radio {{current === item.key ? 'radio-on' : ''}}">
+        <view class="radio-dot" wx:if="{{current === item.key}}"></view>
+      </view>
+    </view>
+
+    <view class="switch-row" hover-class="tap" bindtap="toggleFollow">
+      <text class="row-label">跟随系统</text>
+      <view class="switch {{followSystem ? 'switch-on' : ''}}"><view class="knob {{followSystem ? 'knob-on' : ''}}"></view></view>
+    </view>
+
+    <view class="switch-row" hover-class="tap" bindtap="toggleAuto">
+      <text class="row-label">按时间自动切换</text>
+      <view class="switch {{autoSwitch ? 'switch-on' : ''}}"><view class="knob {{autoSwitch ? 'knob-on' : ''}}"></view></view>
+    </view>
+
+    <text class="note">主题设置将同步到所有设备</text>
+  </view>
+</view>

@@ -32,4 +32,7 @@ Page({
       url: `/pages/preview/preview?id=${e.currentTarget.dataset.id}`,
     });
   },
+
+  goHome() { wx.reLaunch({ url: '/pages/home/home' }); },
+  goMine() { wx.navigateTo({ url: '/pages/mine/mine' }); },
 });

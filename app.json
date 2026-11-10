@@ -4,7 +4,9 @@
     "pages/editor/editor",
     "pages/export/export",
     "pages/preview/preview",
-    "pages/templates/templates"
+    "pages/templates/templates",
+    "pages/mine/mine",
+    "pages/settings/settings"
   ],
   "window": {
     "navigationBarBackgroundColor": "#070708",

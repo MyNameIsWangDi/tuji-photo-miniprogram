@@ -3,7 +3,7 @@
     <!-- 标题栏 -->
     <view class="title-row">
       <text class="h1">图库</text>
-      <view class="gear ic-gear" hover-class="tap"></view>
+      <view class="gear ic-gear" hover-class="tap" bindtap="goSettings"></view>
     </view>
 
     <!-- 新建编辑 -->
@@ -35,5 +35,13 @@
     <view wx:else class="empty">
       <text class="empty-text">从相册选择照片开始编辑</text>
     </view>
+  </view>
+
+  <!-- 底部 pill 标签栏 -->
+  <view class="tabbar">
+    <view class="tab tab-on"><text class="tab-text tab-text-on">图库</text></view>
+    <view class="tab" bindtap="openEditor"><text class="tab-text">编辑</text></view>
+    <view class="tab" bindtap="goTemplates"><text class="tab-text">模板</text></view>
+    <view class="tab" bindtap="goMine"><text class="tab-text">我的</text></view>
   </view>
 </view>
