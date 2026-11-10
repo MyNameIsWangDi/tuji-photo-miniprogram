@@ -3,10 +3,13 @@
   <view class="canvas" id="photoCanvas">
     <image
       class="photo border-{{borderStyle}}"
-      style="filter:{{filterStyle}};transform:rotate({{rotation * 90}}deg);"
+      style="filter:{{showOriginal ? 'none' : filterStyle}};transform:rotate({{rotation * 90}}deg);"
       src="{{image}}"
       mode="aspectFit"
+      bindlongpress="showOriginal"
+      bindtouchend="hideOriginal"
     />
+    <text wx:if="{{showOriginal}}" class="original-badge">原图</text>
 
     <!-- 自由摆放：九宫锚点 + 中心十字 -->
     <block wx:if="{{freeMode}}">

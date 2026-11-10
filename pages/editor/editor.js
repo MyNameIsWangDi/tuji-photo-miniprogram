@@ -91,6 +91,7 @@ Page({
     snapEnabled: true,
     snapRange: 24,
     stickers: STICKERS,
+    showOriginal: false,
     anchorNames: ANCHOR_NAMES,
     anchorPoints: ANCHOR_POINTS,
     snappedName: '',
@@ -316,6 +317,10 @@ Page({
     }].concat(filtered).slice(0, 20));
     wx.navigateTo({ url: '/pages/export/export' });
   },
+
+  /* ---------- 长按画布对比原图 ---------- */
+  showOriginal() { this.setData({ showOriginal: true }); },
+  hideOriginal() { this.setData({ showOriginal: false }); },
 
   close() { wx.navigateBack(); },
 
