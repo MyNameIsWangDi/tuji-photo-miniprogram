@@ -2,6 +2,8 @@
   "pages": [
     "pages/home/home",
     "pages/editor/editor",
+    "pages/export/export",
+    "pages/preview/preview",
     "pages/templates/templates"
   ],
   "window": {

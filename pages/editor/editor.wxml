@@ -1,15 +1,65 @@
 <view class="root {{'t-' + theme}} editor-root">
-  <!-- 照片画布 -->
-  <view class="canvas">
+  <!-- 照片画布 + 叠加元素层 -->
+  <view class="canvas" id="photoCanvas">
     <image
       class="photo border-{{borderStyle}}"
       style="filter:{{filterStyle}};transform:rotate({{rotation * 90}}deg);"
       src="{{image}}"
       mode="aspectFit"
     />
-    <text wx:if="{{wmStyle === 0}}" class="watermark" style="opacity:{{wmOpacity / 100}}">
-      © 途记 · 2026
-    </text>
+
+    <!-- 自由摆放：九宫锚点 + 中心十字 -->
+    <block wx:if="{{freeMode}}">
+      <view class="anchor" wx:for="{{anchorPoints}}" wx:key="index"
+        style="left:{{item[0] * 100}}%; top:{{item[1] * 100}}%;"></view>
+      <view class="cross-v"></view>
+      <view class="cross-h"></view>
+    </block>
+
+    <!-- 水印（3×3 位置九宫格） -->
+    <block wx:if="{{activeTool === 2 && wmStyle === 0}}">
+      <text class="wm wm-{{wmPos}}" style="opacity:{{wmOpacity / 100}}">© 途记 · 2026</text>
+    </block>
+
+    <!-- 叠加元素：文字 / 贴纸，可拖动 + 锚点吸附 -->
+    <movable-area class="movable-area" scale-area="false">
+      <movable-view
+        wx:for="{{elements}}" wx:key="id"
+        class="element {{item.kind}} {{selectedId === item.id ? 'element-on' : ''}}"
+        style="{{elementStyle(item)}}"
+        direction="all"
+        x="{{item.x * canvasW - 48}}"
+        y="{{item.y * canvasH - 20}}"
+        data-id="{{item.id}}"
+        bindchange="onElementMove"
+        bindtouchend="onElementTouchEnd"
+        bindtouchstart="selectElement"
+      >
+        <text wx:if="{{item.kind === 'text'}}" class="el-text" style="font-size:{{item.size}}px">{{item.content}}</text>
+        <text wx:else class="el-sticker">{{item.content}}</text>
+      </movable-view>
+    </movable-area>
+
+    <!-- 裁剪框：三分线 + 四角手柄 -->
+    <block wx:if="{{activeTool === 4}}">
+      <view class="crop-mask crop-top" style="height:{{cropRect.top * 100}}%;"></view>
+      <view class="crop-mask crop-bottom" style="top:{{cropRect.bottom * 100}}%;"></view>
+      <view class="crop-mask crop-left" style="top:{{cropRect.top * 100}}%; height:{{(cropRect.bottom - cropRect.top) * 100}}%; width:{{cropRect.left * 100}}%;"></view>
+      <view class="crop-mask crop-right" style="top:{{cropRect.top * 100}}%; height:{{(cropRect.bottom - cropRect.top) * 100}}%; left:{{cropRect.right * 100}}%;"></view>
+      <view class="crop-frame" style="left:{{cropRect.left * 100}}%; top:{{cropRect.top * 100}}%; width:{{(cropRect.right - cropRect.left) * 100}}%; height:{{(cropRect.bottom - cropRect.top) * 100}}%;">
+        <view class="third third-v1"></view>
+        <view class="third third-v2"></view>
+        <view class="third third-h1"></view>
+        <view class="third third-h2"></view>
+        <view class="handle handle-lt" data-handle="lt" catchtouchmove="moveCropHandle"></view>
+        <view class="handle handle-rt" data-handle="rt" catchtouchmove="moveCropHandle"></view>
+        <view class="handle handle-lb" data-handle="lb" catchtouchmove="moveCropHandle"></view>
+        <view class="handle handle-rb" data-handle="rb" catchtouchmove="moveCropHandle"></view>
+      </view>
+    </block>
+
+    <!-- 已吸附反馈 -->
+    <text wx:if="{{snappedName}}" class="snapped-chip">{{snappedName}}</text>
   </view>
 
   <!-- 功能面板：从常驻工具栏上方滑出 -->
@@ -17,10 +67,7 @@
     <!-- 调色 -->
     <block wx:if="{{activeTool === 0}}">
       <view class="chips">
-        <view
-          wx:for="{{adjustSections}}" wx:key="*this"
-          class="chip {{adjustSection === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickAdjustSection">{{item}}</view>
+        <view wx:for="{{adjustSections}}" wx:key="*this" class="chip {{adjustSection === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickAdjustSection">{{item}}</view>
       </view>
       <view class="slider-row"><text class="s-label">亮度</text><text class="s-val mono">{{brightness >= 0 ? '+' : ''}}{{brightness}}</text></view>
       <slider min="-100" max="100" value="{{brightness}}" activeColor="#F5F5F7" backgroundColor="#1A1A1F" block-size="18" bindchange="onBrightness" bindchanging="onBrightness" />
@@ -35,18 +82,11 @@
     <!-- 滤镜 -->
     <block wx:if="{{activeTool === 1}}">
       <view class="chips">
-        <view
-          wx:for="{{filterCats}}" wx:key="*this"
-          class="chip {{filterCat === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickFilterCat">{{item}}</view>
+        <view wx:for="{{filterCats}}" wx:key="*this" class="chip {{filterCat === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickFilterCat">{{item}}</view>
       </view>
       <scroll-view scroll-x class="filter-scroll">
         <view class="filter-row">
-          <view
-            wx:for="{{visibleFilters}}" wx:key="name"
-            class="filter-item"
-            data-i="{{item.i}}" bindtap="pickFilter"
-          >
+          <view wx:for="{{visibleFilters}}" wx:key="name" class="filter-item" data-i="{{item.i}}" bindtap="pickFilter">
             <view class="filter-thumb {{filterIndex === item.i ? 'thumb-on' : ''}}">{{item.name[0]}}</view>
             <text class="filter-name">{{item.name}}</text>
           </view>
@@ -59,10 +99,7 @@
     <!-- 水印 -->
     <block wx:if="{{activeTool === 2}}">
       <view class="chips">
-        <view
-          wx:for="{{wmSections}}" wx:key="*this"
-          class="chip {{wmSection === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickWmSection">{{item}}</view>
+        <view wx:for="{{wmSections}}" wx:key="*this" class="chip {{wmSection === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickWmSection">{{item}}</view>
       </view>
       <view class="chips">
         <view class="chip {{wmStyle === 0 ? 'chip-on' : ''}}" data-i="0" bindtap="pickWmStyle">文字水印</view>
@@ -71,10 +108,7 @@
       <text class="watermark-preview">© 途记 · 2026</text>
       <view class="pos-grid">
         <view wx:for="{{[0,1,2]}}" wx:for-item="row" wx:key="*this" class="pos-row">
-          <view
-            wx:for="{{[0,1,2]}}" wx:for-item="col" wx:key="*this"
-            class="pos-cell {{wmPos === row * 3 + col ? 'pos-on' : ''}}"
-            data-i="{{row * 3 + col}}" bindtap="pickWmPos"></view>
+          <view wx:for="{{[0,1,2]}}" wx:for-item="col" wx:key="*this" class="pos-cell {{wmPos === row * 3 + col ? 'pos-on' : ''}}" data-i="{{row * 3 + col}}" bindtap="pickWmPos"></view>
         </view>
       </view>
       <view class="slider-row"><text class="s-label">不透明度</text><text class="s-val mono">{{wmOpacity}}%</text></view>
@@ -84,16 +118,17 @@
     <!-- 边框 -->
     <block wx:if="{{activeTool === 3}}">
       <view class="chips">
-        <view
-          wx:for="{{borderSections}}" wx:key="*this"
-          class="chip {{borderSection === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickBorderSection">{{item}}</view>
+        <view wx:for="{{borderSections}}" wx:key="*this" class="chip {{borderSection === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickBorderSection">{{item}}</view>
       </view>
       <view class="chips">
-        <view
-          wx:for="{{['无边框','白边','黑边','圆角','拍立得']}}" wx:key="*this"
-          class="chip {{borderStyle === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickBorderStyle">{{item}}</view>
+        <view wx:for="{{['无边框','白边','黑边','圆角','拍立得']}}" wx:key="*this" class="chip {{borderStyle === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickBorderStyle">{{item}}</view>
+      </view>
+      <view class="chips">
+        <view class="chip" bindtap="addTextElement">+ 文字</view>
+        <view class="chip" data-glyph="{{stickers[0]}}" bindtap="addStickerElement">+ 贴纸</view>
+      </view>
+      <view class="sticker-row">
+        <view wx:for="{{stickers}}" wx:key="*this" class="sticker" data-glyph="{{item}}" bindtap="addStickerElement">{{item}}</view>
       </view>
       <view class="slider-row"><text class="s-label">边框宽度</text><text class="s-val mono">{{borderWidth}}px</text></view>
       <slider min="0" max="32" value="{{borderWidth}}" activeColor="#F5F5F7" backgroundColor="#1A1A1F" block-size="18" bindchange="onBorderWidth" />
@@ -103,39 +138,37 @@
     <!-- 裁剪 -->
     <block wx:if="{{activeTool === 4}}">
       <view class="chips">
-        <view
-          wx:for="{{cropSections}}" wx:key="*this"
-          class="chip {{cropSection === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickCropSection">{{item}}</view>
+        <view wx:for="{{cropSections}}" wx:key="*this" class="chip {{cropSection === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickCropSection">{{item}}</view>
       </view>
       <view class="chips">
-        <view
-          wx:for="{{cropRatios}}" wx:key="*this"
-          class="chip mono {{cropRatio === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickCropRatio">{{item}}</view>
+        <view wx:for="{{cropRatios}}" wx:key="*this" class="chip mono {{cropRatio === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickCropRatio">{{item}}</view>
       </view>
       <view class="chips">
         <view class="chip" data-dir="-1" bindtap="rotate">左转</view>
         <view class="chip" data-dir="1" bindtap="rotate">右转</view>
         <view class="chip" data-dir="2" bindtap="rotate">重置</view>
       </view>
+      <text class="hint">拖动四角手柄可自由调整裁剪范围</text>
     </block>
 
     <!-- 文字 -->
     <block wx:if="{{activeTool === 5}}">
       <view class="chips">
-        <view
-          wx:for="{{textSections}}" wx:key="*this"
-          class="chip {{textSection === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickTextSection">{{item}}</view>
+        <view wx:for="{{textSections}}" wx:key="*this" class="chip {{textSection === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickTextSection">{{item}}</view>
       </view>
       <input class="text-input" value="{{textContent}}" bindinput="onTextInput" placeholder="输入文字…" />
       <view class="chips">
-        <view
-          wx:for="{{['标准','手写','衬线']}}" wx:key="*this"
-          class="chip {{textFont === index ? 'chip-on' : ''}}"
-          data-i="{{index}}" bindtap="pickTextFont">{{item}}</view>
+        <view wx:for="{{['标准','手写','衬线']}}" wx:key="*this" class="chip {{textFont === index ? 'chip-on' : ''}}" data-i="{{index}}" bindtap="pickTextFont">{{item}}</view>
       </view>
+      <view class="sticker-row">
+        <view wx:for="{{stickers}}" wx:key="*this" class="sticker" data-glyph="{{item}}" bindtap="addStickerElement">{{item}}</view>
+      </view>
+      <view class="chips">
+        <view class="chip" bindtap="addTextElement">添加到画布</view>
+        <view class="chip {{snapEnabled ? 'chip-on' : ''}}" bindtap="toggleSnap">定位吸附</view>
+      </view>
+      <view class="slider-row"><text class="s-label">吸附范围</text><text class="s-val mono">{{snapRange}}px</text></view>
+      <slider min="8" max="64" value="{{snapRange}}" activeColor="#F5F5F7" backgroundColor="#1A1A1F" block-size="18" bindchange="onSnapRange" />
       <view class="slider-row"><text class="s-label">大小</text><text class="s-val mono">{{textSize}}</text></view>
       <slider min="8" max="48" value="{{textSize}}" activeColor="#F5F5F7" backgroundColor="#1A1A1F" block-size="18" bindchange="onTextSize" />
     </block>
@@ -143,19 +176,15 @@
 
   <!-- 底部常驻横向工具栏 -->
   <view class="toolbar">
-    <view
-      wx:for="{{tools}}" wx:key="*this"
-      class="tool {{activeTool === index ? 'tool-on' : ''}}"
-      data-index="{{index}}" bindtap="toggleTool"
-    >
-      <view class="tool-icon">{{item[0]}}</view>
-      <text class="tool-label">{{item}}</text>
+    <view wx:for="{{tools}}" wx:key="key" class="tool {{activeTool === index ? 'tool-on' : ''}}" data-index="{{index}}" bindtap="toggleTool">
+      <view class="tool-icon ic-{{item.key}}"></view>
+      <text class="tool-label">{{item.label}}</text>
     </view>
   </view>
 
   <!-- 顶栏浮层 -->
   <view class="topbar">
-    <text class="top-close" bindtap="close">✕</text>
+    <view class="top-close ic-close" bindtap="close"></view>
     <text class="top-title">编辑</text>
     <text class="top-export" bindtap="export">导出</text>
   </view>

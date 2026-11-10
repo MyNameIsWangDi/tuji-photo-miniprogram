@@ -3,7 +3,7 @@
     <!-- 标题栏 -->
     <view class="title-row">
       <text class="h1">图库</text>
-      <view class="gear" hover-class="tap">⚙</view>
+      <view class="gear ic-gear" hover-class="tap"></view>
     </view>
 
     <!-- 新建编辑 -->
@@ -16,7 +16,7 @@
         <text class="continue-title">继续编辑</text>
         <text class="continue-sub">上次编辑 · 有点意思</text>
       </view>
-      <text class="chevron">›</text>
+      <text class="chevron ic-chevron"></text>
     </view>
 
     <!-- 3 列照片网格 -->

@@ -1,0 +1,22 @@
+<view class="root {{'t-' + theme}}">
+  <view class="topbar">
+    <view class="top-close ic-back" bindtap="close"></view>
+    <text class="top-title">{{template.name}}</text>
+    <view class="top-placeholder"></view>
+  </view>
+
+  <!-- 预览 -->
+  <view class="preview" style="background:{{template.swatch}}26">
+    <text class="preview-name">{{template.name}}</text>
+    <text class="preview-wm">© 途记 · 2026</text>
+  </view>
+
+  <!-- 模板包含 -->
+  <text class="sec-label">模板包含</text>
+  <view class="chips">
+    <view wx:for="{{template.components}}" wx:key="*this" class="chip">{{item}}</view>
+  </view>
+
+  <view class="btn-primary" hover-class="tap" bindtap="useTemplate">使用模板</view>
+  <text class="hint">长按预览可对比原图</text>
+</view>

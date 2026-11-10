@@ -1,4 +1,6 @@
 /* 暗房修图台设计系统：底色/面板/发丝线/三级文本/唯一强调色 */
+@import "utils/icons.wxss";
+
 .root {
   --bg: #070708;
   --surface: #0A0A0A;

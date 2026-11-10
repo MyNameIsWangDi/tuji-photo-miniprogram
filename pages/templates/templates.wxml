@@ -13,9 +13,9 @@
       <view
         wx:for="{{templates}}" wx:key="name"
         class="tpl-card" hover-class="tap"
-        data-name="{{item.name}}" bindtap="useTemplate"
+        data-id="{{item.id}}" bindtap="useTemplate"
       >
-        <view class="tpl-cover" style="background:{{item.swatch}}26">
+        <view class="tpl-cover" style="background:{{item.swatch}}">
           <text class="tpl-cover-name">{{item.name}}</text>
         </view>
         <view class="tpl-info">

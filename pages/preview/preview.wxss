@@ -1,0 +1,96 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx 16rpx;
+}
+
+.top-close {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0.8;
+}
+
+.top-placeholder { width: 44rpx; height: 44rpx; }
+
+.top-title {
+  flex: 1;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.preview {
+  margin: 0 48rpx;
+  height: 640rpx;
+  border-radius: 24rpx;
+  border: 1rpx solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.preview-name {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.preview-wm {
+  position: absolute;
+  right: 32rpx;
+  bottom: 32rpx;
+  font-size: 22rpx;
+  color: #FFFFFF;
+  padding: 6rpx 16rpx;
+  border-radius: 12rpx;
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.sec-label {
+  display: block;
+  margin: 40rpx 48rpx 20rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin: 0 48rpx;
+}
+
+.chip {
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 24rpx;
+  border-radius: 32rpx;
+  background: var(--surface);
+  border: 1rpx solid var(--hairline);
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+
+.btn-primary {
+  margin: 48rpx 48rpx 0;
+  height: 104rpx;
+  line-height: 104rpx;
+  text-align: center;
+  border-radius: 24rpx;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.hint {
+  display: block;
+  text-align: center;
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.tap { opacity: 0.85; }

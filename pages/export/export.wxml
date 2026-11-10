@@ -1,0 +1,29 @@
+<view class="root {{'t-' + theme}}">
+  <!-- 顶栏 -->
+  <view class="topbar">
+    <view class="top-close ic-close" bindtap="close"></view>
+    <text class="top-title">导出</text>
+    <view class="top-placeholder"></view>
+  </view>
+
+  <!-- 成品预览（canvas 合成） -->
+  <view class="preview-wrap">
+    <canvas type="2d" id="exportCanvas" class="preview-canvas"></canvas>
+  </view>
+
+  <!-- 信息卡 -->
+  <view class="info-card">
+    <view class="info-row"><text class="info-label">尺寸</text><text class="info-value mono">2048 × 2048</text></view>
+    <view class="info-row"><text class="info-label">格式</text><text class="info-value mono">JPG</text></view>
+    <view class="info-row"><text class="info-label">质量</text><text class="info-value mono">90%</text></view>
+    <view class="info-row"><text class="info-label">边框</text><text class="info-value mono">{{project.borderStyle === 1 ? '白边' : (project.borderStyle === 2 ? '黑边' : '无')}}</text></view>
+    <view class="info-row"><text class="info-label">水印</text><text class="info-value mono">{{project.wmStyle === 0 ? '右下 · ' + project.wmOpacity + '%' : '关闭'}}</text></view>
+    <view class="info-row"><text class="info-label">叠加元素</text><text class="info-value mono">{{project.elements.length || 0}} 个</text></view>
+  </view>
+
+  <!-- 操作 -->
+  <view class="actions">
+    <view class="btn-primary" hover-class="tap" bindtap="saveToAlbum">{{saving ? '保存中…' : '保存到相册'}}</view>
+    <view class="btn-secondary" hover-class="tap" bindtap="share">分享</view>
+  </view>
+</view>

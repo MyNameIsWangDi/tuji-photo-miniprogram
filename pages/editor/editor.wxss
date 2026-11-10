@@ -232,3 +232,185 @@
 }
 
 .tool-on .tool-label { color: var(--accent); }
+
+/* ---------- 画布叠加层 ---------- */
+.canvas { position: relative; overflow: hidden; }
+
+.anchor {
+  position: absolute;
+  width: 16rpx;
+  height: 16rpx;
+  margin-left: -8rpx;
+  margin-top: -8rpx;
+  border-radius: 50%;
+  background: rgba(245, 245, 247, 0.45);
+  z-index: 6;
+}
+
+.cross-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1rpx;
+  height: 100%;
+  background: rgba(245, 245, 247, 0.35);
+  z-index: 5;
+}
+
+.cross-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1rpx;
+  width: 100%;
+  background: rgba(245, 245, 247, 0.35);
+  z-index: 5;
+}
+
+.wm {
+  position: absolute;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  text-shadow: 0 0 8rpx rgba(0, 0, 0, 0.5);
+  z-index: 7;
+}
+
+.wm-0, .wm-3, .wm-6 { left: 24rpx; }
+.wm-1, .wm-4, .wm-7 { left: 50%; transform: translateX(-50%); }
+.wm-2, .wm-5, .wm-8 { right: 24rpx; text-align: right; }
+.wm-0, .wm-1, .wm-2 { top: 24rpx; }
+.wm-3, .wm-4, .wm-5 { top: 50%; transform: translateY(-50%); }
+.wm-6, .wm-7, .wm-8 { bottom: 24rpx; }
+
+.movable-area {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.element {
+  position: absolute;
+  width: 192rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.el-text {
+  color: #FFFFFF;
+  font-weight: 500;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.el-sticker {
+  font-size: 36rpx;
+  width: 72rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  background: rgba(0, 0, 0, 0.32);
+  color: #FFFFFF;
+}
+
+.element-on {
+  outline: 2rpx solid var(--accent);
+  border-radius: 8rpx;
+}
+
+.snapped-chip {
+  position: absolute;
+  left: 50%;
+  bottom: 24rpx;
+  transform: translateX(-50%);
+  padding: 8rpx 20rpx;
+  border-radius: 16rpx;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 22rpx;
+  z-index: 9;
+}
+
+/* ---------- 裁剪框 ---------- */
+.crop-mask {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 6;
+}
+
+.crop-top { left: 0; top: 0; right: 0; }
+.crop-bottom { left: 0; right: 0; bottom: 0; }
+.crop-left { left: 0; }
+.crop-right { right: 0; }
+
+.crop-frame {
+  position: absolute;
+  border: 2rpx solid #FFFFFF;
+  z-index: 7;
+}
+
+.third {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.third-v1 { left: 33.33%; top: 0; width: 1rpx; height: 100%; }
+.third-v2 { left: 66.66%; top: 0; width: 1rpx; height: 100%; }
+.third-h1 { top: 33.33%; left: 0; height: 1rpx; width: 100%; }
+.third-h2 { top: 66.66%; left: 0; height: 1rpx; width: 100%; }
+
+.handle {
+  position: absolute;
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 4rpx solid rgba(0, 0, 0, 0.4);
+}
+
+.handle-lt { left: -14rpx; top: -14rpx; }
+.handle-rt { right: -14rpx; top: -14rpx; }
+.handle-lb { left: -14rpx; bottom: -14rpx; }
+.handle-rb { right: -14rpx; bottom: -14rpx; }
+
+/* ---------- 贴纸行 ---------- */
+.sticker-row {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.sticker {
+  width: 72rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  background: var(--bg);
+  border: 1rpx solid var(--hairline);
+  color: var(--text);
+  font-size: 32rpx;
+}
+
+/* ---------- 工具图标（手绘线性） ---------- */
+.tool-icon {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0.65;
+}
+
+.tool-on .tool-icon { opacity: 1; }
+
+.top-close {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0.65;
+}
