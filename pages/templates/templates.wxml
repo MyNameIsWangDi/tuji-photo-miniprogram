@@ -1,0 +1,49 @@
+<view class="root {{'t-' + theme}}">
+  <view class="page-pad">
+    <!-- 分类 chips -->
+    <view class="cats">
+      <view
+        wx:for="{{cats}}" wx:key="*this"
+        class="chip {{category === index ? 'chip-on' : ''}}"
+        data-i="{{index}}" bindtap="pickCategory">{{item}}</view>
+    </view>
+
+    <!-- 模板卡片网格 -->
+    <view class="tpl-grid">
+      <view
+        wx:for="{{templates}}" wx:key="name"
+        class="tpl-card" hover-class="tap"
+        data-name="{{item.name}}" bindtap="useTemplate"
+      >
+        <view class="tpl-cover" style="background:{{item.swatch}}26">
+          <text class="tpl-cover-name">{{item.name}}</text>
+        </view>
+        <view class="tpl-info">
+          <text class="tpl-name">{{item.name}}</text>
+          <text class="tpl-tag">{{item.tag}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 主题外观：横向选择列表（放在模板功能下方） -->
+    <view class="sec-row">
+      <text class="sec-label">主题外观</text>
+      <text class="sec-count mono">{{themes.length}} 套</text>
+    </view>
+    <scroll-view scroll-x class="theme-scroll">
+      <view class="theme-row">
+        <view
+          wx:for="{{themes}}" wx:key="key"
+          class="theme-card {{theme === item.key ? 'theme-on' : ''}}"
+          data-key="{{item.key}}" bindtap="pickTheme"
+        >
+          <view class="swatch" style="background:{{item.swatch}}"></view>
+          <view class="theme-text">
+            <text class="theme-name">{{item.label}}</text>
+            <text class="theme-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/editor/editor",
+    "pages/templates/templates"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#070708",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#070708",
+    "backgroundTextStyle": "dark"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

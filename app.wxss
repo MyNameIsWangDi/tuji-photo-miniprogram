@@ -1,0 +1,81 @@
+/* 暗房修图台设计系统：底色/面板/发丝线/三级文本/唯一强调色 */
+.root {
+  --bg: #070708;
+  --surface: #0A0A0A;
+  --hairline: #1A1A1F;
+  --text: #F5F5F7;
+  --text-2: #A1A1AA;
+  --text-3: #52525B;
+  --accent: #F5F5F7;
+  --on-accent: #070708;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Noto Sans SC", sans-serif;
+  box-sizing: border-box;
+}
+
+/* 晨光白 */
+.root.t-morning {
+  --bg: #FAFAF7;
+  --surface: #FFFFFF;
+  --hairline: #E4E4E0;
+  --text: #1A1A1E;
+  --text-2: #71717A;
+  --text-3: #A1A1AA;
+  --accent: #0A0A0A;
+  --on-accent: #FFFFFF;
+}
+
+/* 胶片暖 */
+.root.t-film {
+  --bg: #16120E;
+  --surface: #1D1712;
+  --hairline: #2A221A;
+  --text: #F3EDE3;
+  --text-2: #C7BBA8;
+  --text-3: #6E6455;
+  --accent: #E8DCC8;
+  --on-accent: #16120E;
+}
+
+/* 青野 */
+.root.t-green {
+  --bg: #0C1310;
+  --surface: #111B15;
+  --hairline: #1C2A22;
+  --text: #E6F0EA;
+  --text-2: #9DB8AA;
+  --text-3: #4E6156;
+  --accent: #CDE8D6;
+  --on-accent: #0C1310;
+}
+
+/* 墨玉灰 */
+.root.t-jade {
+  --bg: #17181B;
+  --surface: #1F2023;
+  --hairline: #2E3034;
+  --text: #E4E4E7;
+  --text-2: #A1A1AA;
+  --text-3: #62626B;
+  --accent: #D4D4D8;
+  --on-accent: #17181B;
+}
+
+.page-pad {
+  padding: 24rpx 32rpx;
+  box-sizing: border-box;
+}
+
+.h1 {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mono {
+  font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
