@@ -46,6 +46,8 @@ Page({
     contrast: 0,
     saturation: 0,
     temperature: 0,
+    sharpness: 0,
+    hue: 0,
 
     // 滤镜
     filterCat: 0,
@@ -136,6 +138,8 @@ Page({
   onContrast(e) { this.setData({ contrast: e.detail.value }); },
   onSaturation(e) { this.setData({ saturation: e.detail.value }); },
   onTemperature(e) { this.setData({ temperature: e.detail.value }); },
+  onSharpness(e) { this.setData({ sharpness: e.detail.value }); },
+  onHue(e) { this.setData({ hue: e.detail.value }); },
 
   /* ---------- 滤镜 ---------- */
   pickFilterCat(e) {
@@ -283,7 +287,7 @@ Page({
   /* ---------- 导出 ---------- */
   export() {
     const { image, elements, wmPos, wmOpacity, wmStyle, borderStyle, borderWidth } = this.data;
-    wx.setStorageSync('last_project', {
+    const project = {
       id: Date.now(),
       image,
       adjustments: {
@@ -302,7 +306,14 @@ Page({
       rotation: this.data.rotation,
       cropRect: this.data.cropRect,
       editedAt: Date.now(),
-    });
+    };
+    wx.setStorageSync('last_project', project);
+    const history = wx.getStorageSync('project_history') || [];
+    const filtered = history.filter((h) => h.image !== project.image);
+    wx.setStorageSync('project_history', [{
+      id: project.id, image: project.image,
+      title: '未命名编辑', time: '刚刚',
+    }].concat(filtered).slice(0, 20));
     wx.navigateTo({ url: '/pages/export/export' });
   },
 
@@ -316,13 +327,16 @@ Page({
     const c = 1 + this.data.contrast / 200 + (f ? f.contrast - 1 : 0) * k;
     const s = (1 + this.data.saturation / 100) * (f ? 1 + (f.sat - 1) * k : 1);
     const sep = f && f.temp > 0 ? f.temp * k * 40 : 0;
-    const hue = f && f.temp < 0 ? f.temp * k * 20 : 0;
+    const warm = f && f.temp < 0 ? f.temp * k * 20 : 0;
+    const sharp = 1 + this.data.sharpness / 100;
+    const hueShift = this.data.hue * 0.6;
     return [
       `brightness(${b})`,
-      `contrast(${c})`,
+      `contrast(${c * sharp})`,
       `saturate(${Math.max(s, 0)})`,
       sep ? `sepia(${sep}%)` : '',
-      hue ? `hue-rotate(${hue}deg)` : '',
+      warm ? `hue-rotate(${warm}deg)` : '',
+      hueShift ? `hue-rotate(${hueShift}deg)` : '',
     ].filter(Boolean).join(' ');
   },
 

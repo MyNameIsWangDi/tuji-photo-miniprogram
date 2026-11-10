@@ -1,0 +1,29 @@
+<view class="root {{'t-' + theme}}">
+  <view class="page-pad">
+    <text class="h1">编辑</text>
+
+    <block wx:if="{{projects.length}}">
+      <view wx:for="{{projects}}" wx:key="id" class="project" hover-class="tap" data-id="{{item.id}}" bindtap="openProject">
+        <image class="thumb" src="{{item.image}}" mode="aspectFill" />
+        <view class="project-text">
+          <text class="project-title">{{item.title}}</text>
+          <text class="project-sub">上次编辑 · {{item.time}}</text>
+        </view>
+        <view class="ic-chevron chevron"></view>
+      </view>
+    </block>
+
+    <view wx:else class="empty">
+      <text class="empty-title">还没有编辑记录</text>
+      <text class="empty-sub">去图库选一张照片开始</text>
+    </view>
+  </view>
+
+  <!-- 底部 pill 标签栏 -->
+  <view class="tabbar">
+    <view class="tab" bindtap="goHome"><text class="tab-text">图库</text></view>
+    <view class="tab tab-on"><text class="tab-text tab-text-on">编辑</text></view>
+    <view class="tab" bindtap="goTemplates"><text class="tab-text">模板</text></view>
+    <view class="tab" bindtap="goMine"><text class="tab-text">我的</text></view>
+  </view>
+</view>

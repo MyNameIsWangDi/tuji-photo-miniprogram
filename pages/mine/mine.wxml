@@ -31,7 +31,7 @@
   <!-- 底部 pill 标签栏 -->
   <view class="tabbar">
     <view class="tab" bindtap="goHome"><text class="tab-text">图库</text></view>
-    <view class="tab" bindtap="goHome"><text class="tab-text">编辑</text></view>
+    <view class="tab" bindtap="goRecent"><text class="tab-text">编辑</text></view>
     <view class="tab" bindtap="goTemplates"><text class="tab-text">模板</text></view>
     <view class="tab tab-on"><text class="tab-text tab-text-on">我的</text></view>
   </view>

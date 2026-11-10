@@ -50,6 +50,7 @@ Page({
           editedAt: Date.now(),
         };
         wx.setStorageSync('last_project', project);
+        this.pushHistory(project);
         wx.navigateTo({
           url: `/pages/editor/editor?image=${encodeURIComponent(picked[0])}`,
         });
@@ -87,6 +88,7 @@ Page({
       editedAt: Date.now(),
     };
     wx.setStorageSync('last_project', project);
+    this.pushHistory(project);
     wx.navigateTo({
       url: `/pages/editor/editor?image=${encodeURIComponent(image)}`,
     });
@@ -102,5 +104,22 @@ Page({
 
   goMine() {
     wx.navigateTo({ url: '/pages/mine/mine' });
+  },
+
+  goRecent() {
+    wx.navigateTo({ url: '/pages/recent/recent' });
+  },
+
+  /** 记录一条编辑历史（最近编辑列表）。 */
+  pushHistory(project) {
+    const history = wx.getStorageSync('project_history') || [];
+    const item = {
+      id: project.id,
+      image: project.image,
+      title: project.title || '未命名编辑',
+      time: '刚刚',
+    };
+    const filtered = history.filter((h) => h.image !== item.image);
+    wx.setStorageSync('project_history', [item].concat(filtered).slice(0, 20));
   },
 });

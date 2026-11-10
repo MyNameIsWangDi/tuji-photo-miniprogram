@@ -34,5 +34,6 @@ Page({
   },
 
   goHome() { wx.reLaunch({ url: '/pages/home/home' }); },
+  goRecent() { wx.navigateTo({ url: '/pages/recent/recent' }); },
   goMine() { wx.navigateTo({ url: '/pages/mine/mine' }); },
 });

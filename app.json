@@ -3,6 +3,7 @@
     "pages/home/home",
     "pages/editor/editor",
     "pages/export/export",
+    "pages/recent/recent",
     "pages/preview/preview",
     "pages/templates/templates",
     "pages/mine/mine",
