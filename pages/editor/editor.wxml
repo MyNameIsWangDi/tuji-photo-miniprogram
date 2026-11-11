@@ -23,6 +23,9 @@
     <block wx:if="{{activeTool === 2 && wmStyle === 0}}">
       <text class="wm wm-{{wmPos}}" style="opacity:{{wmOpacity / 100}}">© 途记 · 2026</text>
     </block>
+    <block wx:if="{{activeTool === 2 && wmStyle === 1 && wmImage}}">
+      <image class="wm-img wm-img-{{wmPos}}" src="{{wmImage}}" mode="aspectFill" style="opacity:{{wmOpacity / 100}}" />
+    </block>
 
     <!-- 叠加元素：文字 / 贴纸，可拖动 + 锚点吸附 -->
     <movable-area class="movable-area" scale-area="false">
@@ -111,7 +114,11 @@
         <view class="chip {{wmStyle === 0 ? 'chip-on' : ''}}" data-i="0" bindtap="pickWmStyle">文字水印</view>
         <view class="chip {{wmStyle === 1 ? 'chip-on' : ''}}" data-i="1" bindtap="pickWmStyle">图片水印</view>
       </view>
-      <text class="watermark-preview">© 途记 · 2026</text>
+      <view wx:if="{{wmStyle === 1}}" class="wm-picker" hover-class="tap" bindtap="pickWatermarkImage">
+        <image wx:if="{{wmImage}}" class="wm-picker-img" src="{{wmImage}}" mode="aspectFill" />
+        <text wx:else class="wm-picker-text">选择水印图片</text>
+      </view>
+      <text wx:else class="watermark-preview">© 途记 · 2026</text>
       <view class="pos-grid">
         <view wx:for="{{[0,1,2]}}" wx:for-item="row" wx:key="*this" class="pos-row">
           <view wx:for="{{[0,1,2]}}" wx:for-item="col" wx:key="*this" class="pos-cell {{wmPos === row * 3 + col ? 'pos-on' : ''}}" data-i="{{row * 3 + col}}" bindtap="pickWmPos"></view>

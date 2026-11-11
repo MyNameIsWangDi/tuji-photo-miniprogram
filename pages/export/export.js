@@ -6,6 +6,8 @@ Page({
     project: null,
     canvasReady: false,
     saving: false,
+    showOriginal: false,
+    image: '',
   },
 
   onLoad() {
@@ -13,6 +15,7 @@ Page({
     this.setData({
       theme: store.getTheme(),
       project: project || null,
+      image: project ? project.image : '',
     });
     if (project) {
       this.setData({ canvasReady: true });
@@ -82,7 +85,28 @@ Page({
             }
           });
 
-          // 水印
+          // 图片水印
+          if (project.wmStyle === 1 && project.wmImage && project.wmOpacity > 0) {
+            const anchors = [
+              [0, 0], [0.5, 0], [1, 0], [0, 0.5], [0.5, 0.5], [1, 0.5], [0, 1], [0.5, 1], [1, 1],
+            ];
+            const [ax, ay] = anchors[project.wmPos || 8];
+            const size = Math.min(imgW, imgH) * 0.22;
+            const wmImg = canvas.createImage();
+            wmImg.onload = () => {
+              ctx.globalAlpha = (project.wmOpacity || 60) / 100;
+              ctx.drawImage(
+                wmImg,
+                pad + ax * imgW - size / 2,
+                pad + ay * imgH - size / 2,
+                size, size
+              );
+              ctx.globalAlpha = 1;
+            };
+            wmImg.src = project.wmImage;
+          }
+
+          // 文字水印
           if (project.wmStyle === 0 && project.wmOpacity > 0) {
             const anchors = [
               [0, 0], [0.5, 0], [1, 0], [0, 0.5], [0.5, 0.5], [1, 0.5], [0, 1], [0.5, 1], [1, 1],
@@ -128,6 +152,9 @@ Page({
   onShareAppMessage() {
     return { title: '用「途记」修的照片', path: '/pages/home/home' };
   },
+
+  showOriginalTrue() { this.setData({ showOriginal: true }); },
+  showOriginalFalse() { this.setData({ showOriginal: false }); },
 
   close() { wx.navigateBack(); },
 });

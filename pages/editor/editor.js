@@ -62,6 +62,7 @@ Page({
     wmStyle: 0,
     wmPos: 8,
     wmOpacity: 60,
+    wmImage: '',
 
     // 边框
     borderSection: 0,
@@ -178,6 +179,21 @@ Page({
   pickWmSection(e) { this.setData({ wmSection: Number(e.currentTarget.dataset.i) }); },
   pickWmStyle(e) { this.setData({ wmStyle: Number(e.currentTarget.dataset.i) }); },
   pickWmPos(e) { this.setData({ wmPos: Number(e.currentTarget.dataset.i) }); },
+
+  /** 水印「图片水印」：选图。 */
+  pickWatermarkImage() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album'],
+      success: (res) => {
+        const path = res.tempFiles[0] && res.tempFiles[0].tempFilePath;
+        if (path) {
+          this.setData({ wmImage: path, wmStyle: 1 });
+        }
+      },
+    });
+  },
   onWmOpacity(e) { this.setData({ wmOpacity: e.detail.value }); },
 
   /* ---------- 边框 ---------- */
@@ -319,6 +335,7 @@ Page({
       wmPos,
       wmOpacity,
       wmStyle,
+      wmImage: this.data.wmImage,
       borderStyle,
       borderWidth,
       rotation: this.data.rotation,

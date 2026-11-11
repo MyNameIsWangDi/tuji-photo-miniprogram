@@ -6,9 +6,14 @@
     <view class="top-placeholder"></view>
   </view>
 
-  <!-- 成品预览（canvas 合成） -->
+  <!-- 成品预览（canvas 合成）+ 长按对比原图 -->
   <view class="preview-wrap">
     <canvas type="2d" id="exportCanvas" class="preview-canvas"></canvas>
+    <image wx:if="{{showOriginal && image}}" class="original-cover" src="{{image}}" mode="aspectFit"
+      bindtouchstart="showOriginalTrue" bindtouchend="showOriginalFalse" bindtouchcancel="showOriginalFalse" />
+    <view wx:else class="preview-hint" bindlongpress="showOriginalTrue" bindtouchend="showOriginalFalse">
+      <text class="hint-text">长按查看原图</text>
+    </view>
   </view>
 
   <!-- 信息卡 -->

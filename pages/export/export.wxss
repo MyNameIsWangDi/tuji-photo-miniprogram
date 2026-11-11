@@ -81,3 +81,25 @@
 }
 
 .tap { opacity: 0.85; }
+
+.original-cover {
+  position: absolute;
+  left: 16rpx;
+  top: 16rpx;
+  right: 16rpx;
+  bottom: 16rpx;
+  background: #070708;
+  z-index: 3;
+}
+
+.preview-hint {
+  position: absolute;
+  right: 24rpx;
+  bottom: 24rpx;
+  z-index: 2;
+}
+
+.hint-text {
+  font-size: 20rpx;
+  color: rgba(245, 245, 247, 0.6);
+}

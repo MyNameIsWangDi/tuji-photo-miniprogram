@@ -438,3 +438,37 @@
   font-size: 36rpx;
   color: var(--text-2);
 }
+
+.wm-img {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 16rpx;
+  z-index: 7;
+}
+
+.wm-img-0, .wm-img-3, .wm-img-6 { left: 24rpx; }
+.wm-img-1, .wm-img-4, .wm-img-7 { left: 50%; margin-left: -60rpx; }
+.wm-img-2, .wm-img-5, .wm-img-8 { right: 24rpx; }
+.wm-img-0, .wm-img-1, .wm-img-2 { top: 24rpx; }
+.wm-img-3, .wm-img-4, .wm-img-5 { top: 50%; margin-top: -60rpx; }
+.wm-img-6, .wm-img-7, .wm-img-8 { bottom: 24rpx; }
+
+.wm-picker {
+  height: 112rpx;
+  border-radius: 16rpx;
+  background: var(--bg);
+  border: 1rpx solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.wm-picker-img {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 12rpx;
+}
+
+.wm-picker-text { font-size: 24rpx; color: var(--text-2); }
