@@ -427,3 +427,14 @@
   font-size: 22rpx;
   z-index: 12;
 }
+
+.filter-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+
+.filter-fallback {
+  font-size: 36rpx;
+  color: var(--text-2);
+}

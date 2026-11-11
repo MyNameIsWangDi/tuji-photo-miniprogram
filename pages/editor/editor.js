@@ -153,8 +153,25 @@ Page({
     const cat = this.data.filterCats[this.data.filterCat];
     const visibleFilters = FILTERS.map((f, i) => ({ ...f, i })).filter(
       (f) => this.data.filterCat === 0 || f.cat === cat || f.name === '原图'
-    );
+    ).map((f) => ({ ...f, style: this.filterStyleFor(f) }));
     this.setData({ visibleFilters });
+  },
+
+  /** 某个滤镜预设单独作用时的 CSS filter（缩略图用）。 */
+  filterStyleFor(preset) {
+    const k = 1;
+    const b = 1;
+    const c = 1 + (preset.contrast - 1) * k;
+    const s = preset.sat;
+    const sep = preset.temp > 0 ? preset.temp * 40 : 0;
+    const warm = preset.temp < 0 ? preset.temp * 20 : 0;
+    return [
+      `brightness(${b})`,
+      `contrast(${c})`,
+      `saturate(${Math.max(s, 0)})`,
+      sep ? `sepia(${sep}%)` : '',
+      warm ? `hue-rotate(${warm}deg)` : '',
+    ].filter(Boolean).join(' ');
   },
 
   /* ---------- 水印 ---------- */

@@ -16,6 +16,8 @@
         data-id="{{item.id}}" bindtap="useTemplate"
       >
         <view class="tpl-cover" style="background:{{item.swatch}}">
+          <image wx:if="{{cover}}" class="tpl-cover-img" src="{{cover}}" mode="aspectFill" />
+          <view wx:if="{{cover}}" class="tpl-cover-tint" style="background:{{item.swatch}}"></view>
           <text class="tpl-cover-name">{{item.name}}</text>
         </view>
         <view class="tpl-info">

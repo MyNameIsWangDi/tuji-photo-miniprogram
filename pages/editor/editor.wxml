@@ -90,7 +90,10 @@
       <scroll-view scroll-x class="filter-scroll">
         <view class="filter-row">
           <view wx:for="{{visibleFilters}}" wx:key="name" class="filter-item" data-i="{{item.i}}" bindtap="pickFilter">
-            <view class="filter-thumb {{filterIndex === item.i ? 'thumb-on' : ''}}">{{item.name[0]}}</view>
+            <view class="filter-thumb {{filterIndex === item.i ? 'thumb-on' : ''}}">
+              <image wx:if="{{image}}" class="filter-img" src="{{image}}" mode="aspectFill" style="filter:{{item.style}}" />
+              <text wx:else class="filter-fallback">{{item.name[0]}}</text>
+            </view>
             <text class="filter-name">{{item.name}}</text>
           </view>
         </view>

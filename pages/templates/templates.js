@@ -10,10 +10,12 @@ Page({
     cats: CATS,
     category: 0,
     templates: templateData.TEMPLATES,
+    cover: '',
   },
 
   onShow() {
-    this.setData({ theme: store.getTheme() });
+    const photos = wx.getStorageSync('gallery_cache') || [];
+    this.setData({ theme: store.getTheme(), cover: photos[0] || '' });
   },
 
   pickCategory(e) {

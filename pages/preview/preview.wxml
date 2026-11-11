@@ -7,6 +7,7 @@
 
   <!-- 预览 -->
   <view class="preview" style="background:{{template.swatch}}26">
+    <image wx:if="{{cover}}" class="preview-img" src="{{cover}}" mode="aspectFill" style="filter:{{coverStyle}}" />
     <text class="preview-name">{{template.name}}</text>
     <text class="preview-wm">© 途记 · 2026</text>
   </view>
